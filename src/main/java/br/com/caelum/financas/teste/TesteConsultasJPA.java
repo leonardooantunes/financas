@@ -14,10 +14,6 @@ public class TesteConsultasJPA {
 		
 		System.out.println(mov1.getCategoria().size());
 		
-//		em.getTransaction().begin();		
-//		em.getTransaction().commit();
-		em.close();
-
 	}
 
 }
