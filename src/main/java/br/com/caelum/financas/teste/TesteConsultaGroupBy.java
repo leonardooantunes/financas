@@ -6,29 +6,26 @@ import javax.persistence.EntityManager;
 
 import br.com.caelum.financas.dao.MovimentacaoDao;
 import br.com.caelum.financas.modelo.Conta;
-import br.com.caelum.financas.modelo.Movimentacao;
-import br.com.caelum.financas.modelo.TipoMovimentacao;
 import br.com.caelum.financas.util.JPAUtil;
 
-public class TesteJPQL {
+public class TesteConsultaGroupBy {
 
 	public static void main(String[] args) {
 
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
-		
+
 		Conta conta = new Conta();
 		conta.setId(2);
+		
 		MovimentacaoDao dao = new MovimentacaoDao(em);
 
-		List<Movimentacao> resultado = dao.getMovimentacoes(conta, TipoMovimentacao.ENTRADA);
-		
-		for (Movimentacao movimentacao : resultado) {
-			System.out.println(movimentacao.getDescricao());
-			System.out.println(movimentacao.getConta().getTitular());
-		}
+		List<Double> total = dao.getMediaPorDia(conta);
 
-		em.getTransaction().commit();
+		System.out.println("A media do dia 14 é " + total.get(0));
+		System.out.println("A media do dia 15 é " + total.get(1));
+		System.out.println("A media do dia 16 é " + total.get(2));
+		
 		em.close();
 
 	}
